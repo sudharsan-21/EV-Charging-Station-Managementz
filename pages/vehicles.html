@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vehicle Management | EV Charging Station Management System</title>
+  
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  
+  <!-- Custom Stylesheets -->
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+
+  <div class="app-wrapper">
+    <!-- Sidebar -->
+    <aside class="app-sidebar">
+      <div class="sidebar-brand">
+        <span class="ev-brand-icon"><i class="bi bi-lightning-charge-fill"></i></span>
+        <div>
+          <h4>VoltFlow</h4>
+          <span>EV Infrastructure</span>
+        </div>
+      </div>
+
+      <ul class="sidebar-menu">
+        <li class="sidebar-category">Core Platform</li>
+        <li><a href="dashboard.html" class="sidebar-link"><i class="bi bi-speedometer2"></i><span>Dashboard</span></a></li>
+        <li><a href="find-charger.html" class="sidebar-link"><i class="bi bi-search"></i><span>Find a Charger</span></a></li>
+        <li><a href="stations.html" class="sidebar-link"><i class="bi bi-ev-station"></i><span>Stations</span></a></li>
+        <li><a href="chargers.html" class="sidebar-link"><i class="bi bi-plug-fill"></i><span>Chargers</span></a></li>
+        <li class="sidebar-category">Operations & Charging</li>
+        <li><a href="reservations.html" class="sidebar-link"><i class="bi bi-calendar2-check"></i><span>Slot Reservations</span></a></li>
+        <li><a href="charging-session.html" class="sidebar-link"><i class="bi bi-battery-charging"></i><span>Charging Sessions</span></a></li>
+        <li><a href="vehicles.html" class="sidebar-link active"><i class="bi bi-car-front-fill"></i><span>EV Vehicles</span></a></li>
+        <li><a href="billing.html" class="sidebar-link"><i class="bi bi-receipt"></i><span>Billing & Invoices</span></a></li>
+        <li class="sidebar-category">Technical & Analytics</li>
+        <li><a href="maintenance.html" class="sidebar-link"><i class="bi bi-wrench-adjustable"></i><span>Maintenance & Faults</span></a></li>
+        <li><a href="reports.html" class="sidebar-link"><i class="bi bi-bar-chart-line"></i><span>Analytics & Reports</span></a></li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <div class="user-profile-badge">
+          <div class="user-avatar">PS</div>
+          <div class="user-info">
+            <h6 class="current-user-name-display">Priya Sundaram</h6>
+            <p><span class="badge bg-success bg-opacity-25 text-success current-user-role-display">CUSTOMER</span></p>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="app-main">
+      <header class="app-header">
+        <div class="d-flex align-items-center gap-3">
+          <button class="btn btn-sm btn-light d-lg-none" id="sidebarToggleBtn"><i class="bi bi-list fs-5"></i></button>
+          <div class="header-search d-none d-md-block">
+            <i class="bi bi-search"></i>
+            <input type="text" id="vehicleSearchKeyword" class="form-control" placeholder="Search vehicle number or model (Porsche, Mercedes, BMW, Nexon)...">
+          </div>
+        </div>
+
+        <div class="header-actions">
+          <div class="d-flex align-items-center gap-2">
+            <span class="small text-muted d-none d-sm-inline">Role:</span>
+            <select class="form-select form-select-sm role-switcher-select" style="width: auto;">
+              <option value="CUSTOMER">Customer</option>
+              <option value="ADMIN">Admin</option>
+              <option value="STATION_MANAGER">Station Manager</option>
+              <option value="TECHNICIAN">Technician</option>
+            </select>
+          </div>
+          <a href="../index.html" class="btn btn-outline-secondary btn-sm"><i class="bi bi-house-door"></i></a>
+        </div>
+      </header>
+
+      <div class="app-content">
+        <!-- Title & Action -->
+        <div class="d-flex flex-wrap justify-content-between align-items-center page-title-box">
+          <div>
+            <h3>Registered Electric Vehicles & Luxury Fleet</h3>
+            <p>Maintain customer EV profiles, luxury sports models (Porsche, Mercedes, BMW, Audi, Tesla), battery specs, and max DC kW charging rates.</p>
+          </div>
+          <button class="btn btn-ev-primary btn-sm" data-bs-toggle="modal" data-bs-target="#registerVehicleModal">
+            <i class="bi bi-plus-circle me-1"></i> Register New EV
+          </button>
+        </div>
+
+        <!-- Vehicle Category Badges Bar -->
+        <div class="d-flex flex-wrap gap-2 mb-4">
+          <button class="btn btn-sm btn-dark rounded-pill px-3 active" onclick="filterVehicleCategory('all')">All Models</button>
+          <button class="btn btn-sm btn-outline-dark rounded-pill px-3" onclick="filterVehicleCategory('luxury')"><i class="bi bi-gem text-warning me-1"></i> Luxury & High Performance (Porsche, BMW, Mercedes, Audi, Tesla)</button>
+          <button class="btn btn-sm btn-outline-dark rounded-pill px-3" onclick="filterVehicleCategory('mainstream')">Mainstream Commercial (Tata, MG, Hyundai, BYD)</button>
+        </div>
+
+        <!-- Vehicle Grid -->
+        <div class="row g-4" id="vehiclesGridContainer">
+          <!-- Dynamically populated via js/vehicles.js -->
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- Register Vehicle Modal -->
+  <div class="modal fade" id="registerVehicleModal" tabindex="-1" aria-labelledby="registerVehicleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content border-0 shadow">
+        <div class="modal-header bg-dark text-white">
+          <h5 class="modal-title fs-6" id="registerVehicleModalLabel"><i class="bi bi-car-front-fill me-2 text-success"></i>Register Electric Vehicle</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form id="registerVehicleForm">
+          <div class="modal-body p-4">
+            <div class="mb-3">
+              <label class="form-label fw-semibold small">Vehicle Model <span class="text-danger">*</span></label>
+              <select class="form-select" id="vehModelSelect" required>
+                <optgroup label="Luxury & High-Performance Brands">
+                  <option value="Porsche Taycan 4S">Porsche Taycan 4S (93.4 kWh • 270 kW DC)</option>
+                  <option value="Mercedes-Benz EQS 580">Mercedes-Benz EQS 580 (107.8 kWh • 200 kW DC)</option>
+                  <option value="BMW iX xDrive50">BMW iX xDrive50 (111.5 kWh • 195 kW DC)</option>
+                  <option value="Audi e-tron GT">Audi e-tron GT (93.4 kWh • 270 kW DC)</option>
+                  <option value="Tesla Model 3 Long Range">Tesla Model 3 Long Range (75.0 kWh • 250 kW DC)</option>
+                  <option value="Volvo XC40 Recharge">Volvo XC40 Recharge (78.0 kWh • 150 kW DC)</option>
+                  <option value="BMW i4 eDrive40">BMW i4 eDrive40 (83.9 kWh • 205 kW DC)</option>
+                  <option value="Jaguar I-PACE">Jaguar I-PACE (90.0 kWh • 100 kW DC)</option>
+                </optgroup>
+                <optgroup label="Mainstream EV Brands">
+                  <option value="Tata Nexon EV" selected>Tata Nexon EV (40.5 kWh • 60 kW DC)</option>
+                  <option value="MG ZS EV">MG ZS EV (50.3 kWh • 80 kW DC)</option>
+                  <option value="Hyundai Ioniq 5">Hyundai Ioniq 5 (72.6 kWh • 150 kW DC)</option>
+                  <option value="BYD Atto 3">BYD Atto 3 (60.48 kWh • 80 kW DC)</option>
+                  <option value="Mahindra XUV400">Mahindra XUV400 (39.4 kWh • 50 kW DC)</option>
+                  <option value="Tata Tiago EV">Tata Tiago EV (24.0 kWh • 25 kW DC)</option>
+                  <option value="Kia EV6">Kia EV6 (77.4 kWh • 240 kW DC)</option>
+                </optgroup>
+                <option value="Custom EV">Custom Model Specification</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label class="form-label fw-semibold small">Registration Number <span class="text-danger">*</span></label>
+              <input type="text" class="form-control text-uppercase" id="vehNumberInput" placeholder="e.g. TN 38 EQ 5500" required>
+            </div>
+            <div class="row g-3 mb-3">
+              <div class="col-6">
+                <label class="form-label fw-semibold small">Battery Pack (kWh) <span class="text-danger">*</span></label>
+                <input type="number" step="0.1" class="form-control" id="vehCapacityInput" value="40.5" required min="10" max="150">
+              </div>
+              <div class="col-6">
+                <label class="form-label fw-semibold small">Current Battery (%) <span class="text-danger">*</span></label>
+                <input type="number" class="form-control" id="vehCurrentBatteryInput" value="30" required min="1" max="100">
+              </div>
+            </div>
+            <div class="row g-3 mb-3">
+              <div class="col-6">
+                <label class="form-label fw-semibold small">Connector Protocol <span class="text-danger">*</span></label>
+                <select class="form-select" id="vehConnectorSelect" required>
+                  <option value="CCS2">CCS2 (DC Fast)</option>
+                  <option value="Type 2">Type 2 (AC)</option>
+                  <option value="CHAdeMO">CHAdeMO</option>
+                  <option value="GB/T">GB/T</option>
+                </select>
+              </div>
+              <div class="col-6">
+                <label class="form-label fw-semibold small">Max DC Power (kW) <span class="text-danger">*</span></label>
+                <input type="number" class="form-control" id="vehMaxPowerInput" value="60" required min="3" max="350">
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer bg-light">
+            <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-ev-primary btn-sm px-3">Save Vehicle Profile</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- App State -->
+  <script src="../js/app.js"></script>
+  <!-- Vehicle Specific JS -->
+  <script src="../js/vehicles.js"></script>
+</body>
+</html>

@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Maintenance & Fault Reporting | EV Charging Station Management System</title>
+  
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  
+  <!-- Custom Stylesheets -->
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+
+  <div class="app-wrapper">
+    <!-- Sidebar -->
+    <aside class="app-sidebar">
+      <div class="sidebar-brand">
+        <span class="ev-brand-icon"><i class="bi bi-lightning-charge-fill"></i></span>
+        <div>
+          <h4>VoltFlow</h4>
+          <span>EV Infrastructure</span>
+        </div>
+      </div>
+
+      <ul class="sidebar-menu">
+        <li class="sidebar-category">Core Platform</li>
+        <li><a href="dashboard.html" class="sidebar-link"><i class="bi bi-speedometer2"></i><span>Dashboard</span></a></li>
+        <li><a href="find-charger.html" class="sidebar-link"><i class="bi bi-search"></i><span>Find a Charger</span></a></li>
+        <li><a href="stations.html" class="sidebar-link"><i class="bi bi-ev-station"></i><span>Stations</span></a></li>
+        <li><a href="chargers.html" class="sidebar-link"><i class="bi bi-plug-fill"></i><span>Chargers</span></a></li>
+        <li class="sidebar-category">Operations & Charging</li>
+        <li><a href="reservations.html" class="sidebar-link"><i class="bi bi-calendar2-check"></i><span>Slot Reservations</span></a></li>
+        <li><a href="charging-session.html" class="sidebar-link"><i class="bi bi-battery-charging"></i><span>Charging Sessions</span></a></li>
+        <li><a href="vehicles.html" class="sidebar-link"><i class="bi bi-car-front-fill"></i><span>EV Vehicles</span></a></li>
+        <li><a href="billing.html" class="sidebar-link"><i class="bi bi-receipt"></i><span>Billing & Invoices</span></a></li>
+        <li class="sidebar-category">Technical & Analytics</li>
+        <li><a href="maintenance.html" class="sidebar-link active"><i class="bi bi-wrench-adjustable"></i><span>Maintenance & Faults</span></a></li>
+        <li><a href="reports.html" class="sidebar-link"><i class="bi bi-bar-chart-line"></i><span>Analytics & Reports</span></a></li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <div class="user-profile-badge">
+          <div class="user-avatar" style="background:#f59e0b; color:#000;">AK</div>
+          <div class="user-info">
+            <h6 class="current-user-name-display">Arun Kumar</h6>
+            <p><span class="badge bg-warning bg-opacity-25 text-warning current-user-role-display">TECHNICIAN</span></p>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="app-main">
+      <header class="app-header">
+        <div class="d-flex align-items-center gap-3">
+          <button class="btn btn-sm btn-light d-lg-none" id="sidebarToggleBtn"><i class="bi bi-list fs-5"></i></button>
+          <div class="header-search d-none d-md-block">
+            <i class="bi bi-search"></i>
+            <input type="text" id="maintSearchKeyword" class="form-control" placeholder="Search ticket ID, charger, or issue...">
+          </div>
+        </div>
+
+        <div class="header-actions">
+          <div class="d-flex align-items-center gap-2">
+            <span class="small text-muted d-none d-sm-inline">Role:</span>
+            <select class="form-select form-select-sm role-switcher-select" style="width: auto;">
+              <option value="TECHNICIAN">Technician</option>
+              <option value="ADMIN">Admin</option>
+              <option value="STATION_MANAGER">Station Manager</option>
+              <option value="CUSTOMER">Customer</option>
+            </select>
+          </div>
+          <a href="../index.html" class="btn btn-outline-secondary btn-sm"><i class="bi bi-house-door"></i></a>
+        </div>
+      </header>
+
+      <div class="app-content">
+        <!-- Title & Action -->
+        <div class="d-flex flex-wrap justify-content-between align-items-center page-title-box">
+          <div>
+            <h3>Charger Maintenance & Fault Dispatch</h3>
+            <p>Field engineering tickets, hardware inspections, automatic bay lockout, and repair workflows.</p>
+          </div>
+          <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#reportFaultModal">
+            <i class="bi bi-flag-fill me-1"></i> Report Charger Fault
+          </button>
+        </div>
+
+        <!-- Filter Controls -->
+        <div class="card border-0 shadow-sm rounded-4 p-3 mb-4 bg-white">
+          <div class="row g-2 align-items-center">
+            <div class="col-md-4">
+              <label class="form-label text-muted small fw-semibold mb-1">Ticket Status</label>
+              <select class="form-select form-select-sm" id="maintFilterStatus">
+                <option value="">All Statuses</option>
+                <option value="Reported">Reported</option>
+                <option value="In Progress">In Progress</option>
+                <option value="Completed">Completed</option>
+              </select>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label text-muted small fw-semibold mb-1">Priority Level</label>
+              <select class="form-select form-select-sm" id="maintFilterPriority">
+                <option value="">All Priorities</option>
+                <option value="Critical">Critical</option>
+                <option value="High">High</option>
+                <option value="Medium">Medium</option>
+                <option value="Low">Low</option>
+              </select>
+            </div>
+            <div class="col-md-4 text-end pt-3">
+              <button class="btn btn-outline-secondary btn-sm w-100" id="maintResetFiltersBtn">
+                <i class="bi bi-arrow-counterclockwise me-1"></i> Reset Filters
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Maintenance Tickets Table -->
+        <div class="data-table-card">
+          <div class="card-header">
+            <div>
+              <h6 class="fw-bold mb-0">Maintenance Work Orders</h6>
+              <small class="text-muted" id="maintCountSummary">Active and historical repair logs</small>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table class="table mb-0">
+              <thead>
+                <tr>
+                  <th>Ticket ID</th>
+                  <th>Charger Bay</th>
+                  <th>Station Hub</th>
+                  <th>Issue Description</th>
+                  <th>Priority</th>
+                  <th>Technician</th>
+                  <th>Status</th>
+                  <th class="text-end">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="maintenanceTableBody">
+                <!-- Populated via js/maintenance.js -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- Report Fault Modal -->
+  <div class="modal fade" id="reportFaultModal" tabindex="-1" aria-labelledby="reportFaultModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content border-0 shadow">
+        <div class="modal-header bg-danger text-white">
+          <h5 class="modal-title fs-6" id="reportFaultModalLabel"><i class="bi bi-exclamation-triangle-fill me-2"></i>Report Charger Fault</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form id="reportFaultForm">
+          <div class="modal-body p-4">
+            <div class="mb-3">
+              <label class="form-label fw-semibold small">Select Faulty Charger <span class="text-danger">*</span></label>
+              <select class="form-select" id="faultChargerSelect" required>
+                <!-- Populated via JS -->
+              </select>
+            </div>
+
+            <div class="row g-3 mb-3">
+              <div class="col-6">
+                <label class="form-label fw-semibold small">Problem Category <span class="text-danger">*</span></label>
+                <select class="form-select" id="faultCategorySelect" required>
+                  <option value="Charging Cable Damaged">Charging Cable Damaged</option>
+                  <option value="Connector Latch Failure">Connector Latch Failure</option>
+                  <option value="Grounding / Insulation Fault">Grounding / Insulation Fault</option>
+                  <option value="Touchscreen / UI Crash">Touchscreen / UI Crash</option>
+                  <option value="Power Overheating">Power Module Overheating</option>
+                  <option value="Network Offline">Telemetry Link Failure</option>
+                </select>
+              </div>
+
+              <div class="col-6">
+                <label class="form-label fw-semibold small">Priority Level <span class="text-danger">*</span></label>
+                <select class="form-select" id="faultPrioritySelect" required>
+                  <option value="Critical">Critical (Immediate shutdown)</option>
+                  <option value="High" selected>High (High-voltage issue)</option>
+                  <option value="Medium">Medium (Display / minor)</option>
+                  <option value="Low">Low (Cosmetic / routine)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-semibold small">Detailed Technical Description <span class="text-danger">*</span></label>
+              <textarea class="form-control" id="faultDescInput" rows="3" required placeholder="Describe symptoms, error codes, and condition observed..."></textarea>
+            </div>
+
+            <div class="alert alert-secondary small mb-0">
+              <i class="bi bi-shield-lock-fill text-danger me-1"></i>
+              <strong>Safety Protocol:</strong> Submitting this ticket will immediately change charger status to <strong>MAINTENANCE</strong> and lock it from reservations.
+            </div>
+          </div>
+          <div class="modal-footer bg-light">
+            <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-danger btn-sm px-3">Dispatch Ticket</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Update Maintenance Ticket Modal -->
+  <div class="modal fade" id="updateTicketModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content border-0 shadow">
+        <div class="modal-header bg-dark text-white">
+          <h5 class="modal-title fs-6">Update Maintenance Work Order</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body p-4">
+          <input type="hidden" id="updateTicketId">
+          <p class="small text-muted mb-3">Update state for ticket <strong id="updateTicketDisplayId">MNT-2026-01</strong>:</p>
+
+          <div class="mb-3">
+            <label class="form-label fw-semibold small">Work Order Status</label>
+            <select class="form-select" id="updateTicketStatusSelect">
+              <option value="Reported">Reported</option>
+              <option value="In Progress">In Progress (Under active repair)</option>
+              <option value="Completed">Completed (Repaired & tested)</option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label fw-semibold small">Engineering Remarks & Action Taken</label>
+            <textarea class="form-control" id="updateTicketRemarksInput" rows="2" placeholder="e.g. DC contactor replaced, insulation tested at 500V..."></textarea>
+          </div>
+        </div>
+        <div class="modal-footer bg-light">
+          <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-ev-primary btn-sm px-3" onclick="saveTicketUpdate()">Save & Synchronize</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- App State -->
+  <script src="../js/app.js"></script>
+  <!-- Maintenance JS -->
+  <script src="../js/maintenance.js"></script>
+</body>
+</html>

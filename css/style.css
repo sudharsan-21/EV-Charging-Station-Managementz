@@ -1,0 +1,626 @@
+/* ==========================================================================
+   EV Charging Station Management System - Main Styling
+   Theme: Modern Electric Mobility (Deep Navy, Electric Emerald & Cyan Accents)
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+:root {
+  --primary-color: #00d084;         /* Electric Emerald */
+  --primary-hover: #00b371;
+  --secondary-color: #06b6d4;       /* High-Voltage Cyan */
+  --secondary-hover: #0891b2;
+  --accent-blue: #3b82f6;          /* Power Blue */
+  --bg-dark: #0b1329;              /* Deep Midnight Slate */
+  --bg-dark-card: #131f37;         /* Sleek Card Surface */
+  --bg-dark-card-hover: #1a2a4b;
+  --bg-light: #f8fafc;
+  --surface-white: #ffffff;
+  --text-dark: #0f172a;
+  --text-muted: #64748b;
+  --text-light: #f1f5f9;
+  --border-color: #e2e8f0;
+  --border-dark: #1e293b;
+  
+  /* Status Colors */
+  --status-available: #10b981;     /* Green */
+  --status-charging: #06b6d4;      /* Cyan / Blue Pulse */
+  --status-reserved: #f59e0b;      /* Amber / Orange */
+  --status-maintenance: #ef4444;   /* Red */
+  --status-offline: #64748b;       /* Slate Grey */
+
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.08), 0 2px 4px -1px rgba(0,0,0,0.04);
+  --shadow-lg: 0 10px 25px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+  --shadow-glow: 0 0 20px rgba(0, 208, 132, 0.35);
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-light);
+  color: var(--text-dark);
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ==========================================================================
+   Navigation Bar
+   ========================================================================== */
+.ev-navbar {
+  background: rgba(11, 19, 41, 0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 0.75rem 0;
+  transition: all 0.3s ease;
+  z-index: 1040;
+}
+
+.ev-navbar .navbar-brand {
+  font-weight: 800;
+  font-size: 1.35rem;
+  letter-spacing: -0.5px;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.ev-brand-icon {
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-sm);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #0b1329;
+  font-size: 1.3rem;
+  box-shadow: 0 0 15px rgba(0, 208, 132, 0.4);
+}
+
+.ev-navbar .nav-link {
+  color: #cbd5e1;
+  font-weight: 500;
+  padding: 0.5rem 1rem !important;
+  border-radius: var(--radius-sm);
+  transition: all 0.2s ease;
+  font-size: 0.95rem;
+}
+
+.ev-navbar .nav-link:hover,
+.ev-navbar .nav-link.active {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.ev-navbar .nav-link.active {
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+/* Role Selector Badge in Navbar */
+.role-badge-selector {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  font-size: 0.82rem;
+  border-radius: 20px;
+  padding: 0.35rem 0.8rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.role-badge-selector:hover {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+/* ==========================================================================
+   Buttons & Micro-interactions
+   ========================================================================== */
+.btn-ev-primary {
+  background: linear-gradient(135deg, var(--primary-color), #059669);
+  color: #042416;
+  font-weight: 600;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 0.65rem 1.4rem;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 12px rgba(0, 208, 132, 0.25);
+}
+
+.btn-ev-primary:hover {
+  background: linear-gradient(135deg, #05e693, #047857);
+  color: #02180e;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 208, 132, 0.4);
+}
+
+.btn-ev-secondary {
+  background: linear-gradient(135deg, var(--secondary-color), #0284c7);
+  color: #ffffff;
+  font-weight: 600;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 0.65rem 1.4rem;
+  transition: all 0.25s ease;
+}
+
+.btn-ev-secondary:hover {
+  background: linear-gradient(135deg, #22d3ee, #0369a1);
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(6, 182, 212, 0.35);
+}
+
+.btn-ev-outline {
+  border: 1.5px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  background: transparent;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  padding: 0.65rem 1.4rem;
+  transition: all 0.2s ease;
+}
+
+.btn-ev-outline:hover {
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+  background: rgba(0, 208, 132, 0.08);
+}
+
+/* ==========================================================================
+   Hero Section
+   ========================================================================== */
+.ev-hero {
+  background: radial-gradient(circle at 80% 20%, rgba(6, 182, 212, 0.15) 0%, transparent 40%),
+              radial-gradient(circle at 10% 80%, rgba(0, 208, 132, 0.12) 0%, transparent 40%),
+              linear-gradient(180deg, #0b1329 0%, #0d1b38 100%);
+  color: #ffffff;
+  padding: 5rem 0 4.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.ev-hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.02' fill-rule='evenodd'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E");
+  pointer-events: none;
+}
+
+.hero-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(0, 208, 132, 0.12);
+  border: 1px solid rgba(0, 208, 132, 0.3);
+  color: var(--primary-color);
+  padding: 0.4rem 1rem;
+  border-radius: 30px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.hero-title {
+  font-size: 3.2rem;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -1px;
+  margin-bottom: 1.25rem;
+}
+
+.hero-title .gradient-text {
+  background: linear-gradient(135deg, #00d084 0%, #38bdf8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-lead {
+  font-size: 1.18rem;
+  color: #94a3b8;
+  max-width: 600px;
+  line-height: 1.7;
+  margin-bottom: 2rem;
+}
+
+/* Hero Live Charger Simulator Card */
+.hero-simulation-card {
+  background: rgba(19, 31, 55, 0.85);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-xl);
+  padding: 1.8rem;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45);
+  position: relative;
+}
+
+.pulse-indicator {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: var(--primary-color);
+  box-shadow: 0 0 0 rgba(0, 208, 132, 0.6);
+  animation: pulse-ring 1.8s infinite;
+}
+
+@keyframes pulse-ring {
+  0% { box-shadow: 0 0 0 0 rgba(0, 208, 132, 0.7); }
+  70% { box-shadow: 0 0 0 10px rgba(0, 208, 132, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(0, 208, 132, 0); }
+}
+
+/* ==========================================================================
+   Statistics Banner
+   ========================================================================== */
+.stats-banner {
+  background: #091024;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 2.5rem 0;
+}
+
+.stat-item {
+  text-align: center;
+  padding: 1rem;
+}
+
+.stat-value {
+  font-size: 2.6rem;
+  font-weight: 800;
+  font-family: var(--font-mono);
+  color: #ffffff;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+
+.stat-value.primary { color: var(--primary-color); }
+.stat-value.secondary { color: var(--secondary-color); }
+.stat-value.accent { color: #f59e0b; }
+.stat-value.blue { color: #60a5fa; }
+
+.stat-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #94a3b8;
+}
+
+/* ==========================================================================
+   Section Styling
+   ========================================================================== */
+.ev-section {
+  padding: 4.5rem 0;
+}
+
+.section-header {
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto 3rem;
+}
+
+.section-subtitle {
+  color: var(--primary-color);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 1.5px;
+  margin-bottom: 0.5rem;
+}
+
+.section-title {
+  font-size: 2.2rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  color: var(--text-dark);
+}
+
+.section-desc {
+  color: var(--text-muted);
+  font-size: 1.05rem;
+  margin-top: 0.75rem;
+}
+
+/* Feature Cards */
+.feature-card {
+  background: #ffffff;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-color);
+  padding: 2rem;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.feature-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lg);
+  border-color: rgba(0, 208, 132, 0.4);
+}
+
+.feature-icon-wrapper {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  margin-bottom: 1.25rem;
+  background: rgba(0, 208, 132, 0.12);
+  color: var(--primary-color);
+}
+
+.feature-icon-wrapper.blue {
+  background: rgba(6, 182, 212, 0.12);
+  color: var(--secondary-color);
+}
+
+.feature-icon-wrapper.amber {
+  background: rgba(245, 158, 11, 0.12);
+  color: #f59e0b;
+}
+
+.feature-card h4 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+
+.feature-card p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  margin-bottom: 0;
+  flex-grow: 1;
+}
+
+/* Workflow Step Line */
+.workflow-step {
+  text-align: center;
+  position: relative;
+  padding: 1.5rem 1rem;
+}
+
+.workflow-number {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--bg-dark), #1e293b);
+  border: 2px solid var(--primary-color);
+  color: var(--primary-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 1.2rem;
+  margin: 0 auto 1.25rem;
+  box-shadow: 0 0 15px rgba(0, 208, 132, 0.2);
+}
+
+.workflow-step h5 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.workflow-step p {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  margin-bottom: 0;
+}
+
+/* ==========================================================================
+   Visual Charger Board Component (Unique Feature)
+   ========================================================================== */
+.charger-tile {
+  background: #ffffff;
+  border: 1.5px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  transition: all 0.25s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.charger-tile:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+
+.charger-tile.status-available {
+  border-left: 5px solid var(--status-available);
+}
+
+.charger-tile.status-charging {
+  border-left: 5px solid var(--status-charging);
+  background: #f0fdfa;
+}
+
+.charger-tile.status-reserved {
+  border-left: 5px solid var(--status-reserved);
+}
+
+.charger-tile.status-maintenance {
+  border-left: 5px solid var(--status-maintenance);
+  background: #fef2f2;
+}
+
+.charger-tile.status-offline {
+  border-left: 5px solid var(--status-offline);
+  opacity: 0.75;
+}
+
+.charger-code-tag {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+/* Status Badges */
+.badge-status {
+  padding: 0.35rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.badge-status.available {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.badge-status.charging {
+  background: #cffafe;
+  color: #0e7490;
+}
+
+.badge-status.reserved {
+  background: #fef3c7;
+  color: #b45309;
+}
+
+.badge-status.maintenance {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.badge-status.offline {
+  background: #f1f5f9;
+  color: #475569;
+}
+
+/* ==========================================================================
+   Smart Battery Graphic Indicator
+   ========================================================================== */
+.battery-graphic-container {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.battery-frame {
+  width: 120px;
+  height: 52px;
+  border: 3px solid #cbd5e1;
+  border-radius: 8px;
+  padding: 3px;
+  position: relative;
+  background: #f8fafc;
+}
+
+.battery-frame::after {
+  content: '';
+  position: absolute;
+  right: -8px;
+  top: 14px;
+  width: 5px;
+  height: 20px;
+  background: #cbd5e1;
+  border-radius: 0 3px 3px 0;
+}
+
+.battery-fill {
+  height: 100%;
+  border-radius: 4px;
+  background: linear-gradient(90deg, #f59e0b, #00d084);
+  transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 0.75rem;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.4);
+}
+
+/* Dark mode battery graphic */
+.battery-frame.dark {
+  border-color: #475569;
+  background: #0f172a;
+}
+.battery-frame.dark::after {
+  background: #475569;
+}
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+.ev-footer {
+  background: #070d1e;
+  color: #94a3b8;
+  padding: 4rem 0 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  margin-top: auto;
+}
+
+.ev-footer h5 {
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 1.05rem;
+  margin-bottom: 1.25rem;
+}
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-links li {
+  margin-bottom: 0.6rem;
+}
+
+.footer-links a {
+  color: #94a3b8;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: color 0.2s ease;
+}
+
+.footer-links a:hover {
+  color: var(--primary-color);
+}
+
+.footer-academic-badge {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+}
+
+/* Toast styling override */
+.toast-container {
+  z-index: 1090;
+}
+
+.ev-toast {
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255,255,255,0.1);
+  background: #0f172a;
+  color: #ffffff;
+}

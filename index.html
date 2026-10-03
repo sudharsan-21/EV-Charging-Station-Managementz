@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EV Charging Station Management System | Smart EV Infrastructure</title>
+  
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  
+  <!-- Custom Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <nav class="navbar navbar-expand-lg ev-navbar sticky-top">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <span class="ev-brand-icon"><i class="bi bi-lightning-charge-fill"></i></span>
+        <span>VoltFlow <small class="fw-normal text-muted" style="font-size:0.8rem;">EV INFRA</small></span>
+      </a>
+
+      <button class="navbar-toggler text-white border-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="bi bi-list fs-2 text-white"></i>
+      </button>
+
+      <div class="collapse navbar-collapse" id="mainNavbar">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="pages/find-charger.html"><i class="bi bi-search me-1"></i> Find a Charger</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="pages/dashboard.html"><i class="bi bi-speedometer2 me-1"></i> Dashboard</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="pages/stations.html">Stations</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="pages/chargers.html">Chargers</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="pages/reservations.html">Reservations</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="pages/maintenance.html">Maintenance</a>
+          </li>
+        </ul>
+
+        <div class="d-flex align-items-center gap-2">
+          <!-- Role Switcher for Academic Demo -->
+          <div class="dropdown">
+            <button class="btn role-badge-selector dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="bi bi-shield-lock-fill text-success"></i>
+              <span class="current-user-role-display">ADMIN</span>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end shadow">
+              <li><h6 class="dropdown-header text-uppercase text-muted" style="font-size: 0.7rem;">Simulate Role (LWP Review)</h6></li>
+              <li><button class="dropdown-item" onclick="switchUserRole('ADMIN')"><i class="bi bi-person-gear me-2"></i>Admin</button></li>
+              <li><button class="dropdown-item" onclick="switchUserRole('STATION_MANAGER')"><i class="bi bi-building-gear me-2"></i>Station Manager</button></li>
+              <li><button class="dropdown-item" onclick="switchUserRole('TECHNICIAN')"><i class="bi bi-tools me-2"></i>Technician</button></li>
+              <li><button class="dropdown-item" onclick="switchUserRole('CUSTOMER')"><i class="bi bi-person-fill me-2"></i>Customer</button></li>
+            </ul>
+          </div>
+
+          <a href="pages/login.html" class="btn btn-outline-light btn-sm px-3 rounded-pill">
+            <i class="bi bi-box-arrow-in-right me-1"></i> Portal Login
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <header class="ev-hero">
+    <div class="container position-relative" style="z-index: 2;">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-7">
+          <div class="hero-tag">
+            <span class="pulse-indicator"></span> Next-Gen EV Infrastructure Management
+          </div>
+          <h1 class="hero-title">
+            Smart EV Charging, <br>
+            <span class="gradient-text">Managed Efficiently.</span>
+          </h1>
+          <p class="hero-lead">
+            Find available chargers, reserve charging slots, monitor charging sessions and manage EV charging infrastructure from one platform.
+          </p>
+          <div class="d-flex flex-wrap gap-3 pt-2">
+            <a href="pages/find-charger.html" class="btn btn-ev-primary">
+              <i class="bi bi-geo-alt-fill me-2"></i> Find a Charger
+            </a>
+            <a href="pages/dashboard.html" class="btn btn-ev-secondary">
+              <i class="bi bi-grid-1x2-fill me-2"></i> View Dashboard
+            </a>
+            <a href="#calculatorSection" class="btn btn-ev-outline">
+              <i class="bi bi-calculator me-2"></i> Quick Calculator
+            </a>
+          </div>
+
+          <!-- Academic Review Badge -->
+          <div class="mt-4 pt-3 border-top border-secondary border-opacity-25 d-flex align-items-center gap-3">
+            <span class="badge bg-success bg-opacity-25 text-success border border-success border-opacity-50 px-3 py-2 rounded-pill">
+              <i class="bi bi-mortarboard-fill me-1"></i> Academic Project : LWP Review 01
+            </span>
+            <small class="text-secondary">Web Technology Course Individual Project</small>
+          </div>
+        </div>
+
+        <div class="col-lg-5">
+          <!-- Hero Interactive Live Simulation Preview Card -->
+          <div class="hero-simulation-card">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <div>
+                <span class="badge bg-success bg-opacity-25 text-success border border-success border-opacity-25 mb-1">
+                  <span class="pulse-indicator me-1"></span> LIVE MONITOR
+                </span>
+                <h5 class="text-white mb-0">Coimbatore Central Hub</h5>
+                <small class="text-muted">Avinashi Road Station</small>
+              </div>
+              <div class="text-end">
+                <span class="badge-status available"><i class="bi bi-check-circle-fill"></i> OPERATIONAL</span>
+              </div>
+            </div>
+
+            <!-- Mini Visual Charger Board Grid -->
+            <div class="p-3 rounded-3 mb-3" style="background: rgba(11, 19, 41, 0.7); border: 1px solid rgba(255,255,255,0.08);">
+              <div class="d-flex justify-content-between text-secondary mb-2" style="font-size: 0.8rem;">
+                <span>STATION CHARGER STATUS</span>
+                <span>4 / 6 AVAILABLE</span>
+              </div>
+              <div class="row g-2 text-center" style="font-size: 0.82rem;">
+                <div class="col-4">
+                  <div class="p-2 rounded bg-success bg-opacity-20 border border-success border-opacity-30 text-white">
+                    <span class="fw-bold font-monospace d-block">CH-001</span>
+                    <small class="text-success fw-bold">60 kW • AVAIL</small>
+                  </div>
+                </div>
+                <div class="col-4">
+                  <div class="p-2 rounded bg-info bg-opacity-20 border border-info border-opacity-30 text-white">
+                    <span class="fw-bold font-monospace d-block">CH-002</span>
+                    <small class="text-info fw-bold">120 kW • 68%</small>
+                  </div>
+                </div>
+                <div class="col-4">
+                  <div class="p-2 rounded bg-success bg-opacity-20 border border-success border-opacity-30 text-white">
+                    <span class="fw-bold font-monospace d-block">CH-003</span>
+                    <small class="text-success fw-bold">22 kW • AVAIL</small>
+                  </div>
+                </div>
+                <div class="col-4">
+                  <div class="p-2 rounded bg-danger bg-opacity-20 border border-danger border-opacity-30 text-white">
+                    <span class="fw-bold font-monospace d-block">CH-004</span>
+                    <small class="text-danger fw-bold">150 kW • MAINT</small>
+                  </div>
+                </div>
+                <div class="col-4">
+                  <div class="p-2 rounded bg-success bg-opacity-20 border border-success border-opacity-30 text-white">
+                    <span class="fw-bold font-monospace d-block">CH-005</span>
+                    <small class="text-success fw-bold">50 kW • AVAIL</small>
+                  </div>
+                </div>
+                <div class="col-4">
+                  <div class="p-2 rounded bg-warning bg-opacity-20 border border-warning border-opacity-30 text-white">
+                    <span class="fw-bold font-monospace d-block">CH-006</span>
+                    <small class="text-warning fw-bold">30 kW • RSRVD</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Active Session Teaser -->
+            <div class="p-3 rounded-3" style="background: rgba(255,255,255,0.03); border: 1px dashed rgba(255,255,255,0.15);">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <span class="text-light fw-semibold" style="font-size:0.85rem;">
+                  <i class="bi bi-car-front-fill text-info me-1"></i> Active Session: Nexon EV
+                </span>
+                <span class="badge bg-info text-dark fw-bold">Fast Charging</span>
+              </div>
+              <div class="progress mb-2" style="height: 10px; background-color: rgba(255,255,255,0.1);">
+                <div class="progress-bar progress-bar-striped progress-bar-animated bg-info" role="progressbar" style="width: 68%;">68%</div>
+              </div>
+              <div class="d-flex justify-content-between text-secondary" style="font-size:0.8rem;">
+                <span>Power: 58.4 kW</span>
+                <span>Energy: 18.2 kWh</span>
+                <span>Est: 14 mins left</span>
+              </div>
+            </div>
+            
+            <div class="mt-3 text-center">
+              <a href="pages/charging-session.html" class="text-decoration-none text-info fw-semibold" style="font-size:0.88rem;">
+                Open Interactive Session Simulation <i class="bi bi-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Platform Statistics Banner -->
+  <section class="stats-banner">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-6 col-md-3">
+          <div class="stat-item">
+            <div class="stat-value primary">24</div>
+            <div class="stat-label"><i class="bi bi-ev-station me-1"></i> Charging Stations</div>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="stat-item">
+            <div class="stat-value secondary">98+</div>
+            <div class="stat-label"><i class="bi bi-plug-fill me-1"></i> Charging Points</div>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="stat-item">
+            <div class="stat-value accent">24</div>
+            <div class="stat-label"><i class="bi bi-lightning-charge me-1"></i> Active Sessions</div>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="stat-item">
+            <div class="stat-value blue">14.8 <span style="font-size: 1.4rem;">MWh</span></div>
+            <div class="stat-label"><i class="bi bi-battery-charging me-1"></i> Energy Delivered</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: Why EV Charging Management? -->
+  <section class="ev-section bg-light">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-subtitle">Infrastructure Operating System</div>
+        <h2 class="section-title">Why EV Charging Management?</h2>
+        <p class="section-desc">
+          Managing EV infrastructure requires more than basic reservations. Our platform unifies charger availability, power delivery, automated scheduling, and maintenance.
+        </p>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-md-6 col-lg-4">
+          <div class="feature-card">
+            <div class="feature-icon-wrapper">
+              <i class="bi bi-search"></i>
+            </div>
+            <h4>Easy Charger Discovery</h4>
+            <p>Filter stations by real-time status, connector type (CCS2, Type 2, CHAdeMO, GB/T), and output capacity from 7.4 kW up to 150 kW.</p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+          <div class="feature-card">
+            <div class="feature-icon-wrapper blue">
+              <i class="bi bi-calendar2-check"></i>
+            </div>
+            <h4>Conflict-Free Slot Reservation</h4>
+            <p>Integrated time-slot booking engine that checks charger availability dynamically to prevent overlapping reservations.</p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+          <div class="feature-card">
+            <div class="feature-icon-wrapper amber">
+              <i class="bi bi-activity"></i>
+            </div>
+            <h4>Real-Time Availability Simulation</h4>
+            <p>Visual status boards reflecting real-time states: Available, Charging, Reserved, Maintenance, or Offline.</p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+          <div class="feature-card">
+            <div class="feature-icon-wrapper amber">
+              <i class="bi bi-calculator"></i>
+            </div>
+            <h4>Charging Cost Estimation</h4>
+            <p>Accurate charging cost calculations based on battery capacity, delta state of charge, and station electricity tariffs.</p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+          <div class="feature-card">
+            <div class="feature-icon-wrapper">
+              <i class="bi bi-wrench-adjustable"></i>
+            </div>
+            <h4>Maintenance & Fault Management</h4>
+            <p>Automated technician dispatch and charger auto-lock when under repair to guarantee maximum infrastructure safety.</p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+          <div class="feature-card">
+            <div class="feature-icon-wrapper blue">
+              <i class="bi bi-graph-up-arrow"></i>
+            </div>
+            <h4>Usage & Utilization Analytics</h4>
+            <p>Track station throughput, charger utilization percentage, daily kilowatt-hours delivered, and revenue performance.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: How It Works Workflow -->
+  <section class="ev-section bg-white border-top border-bottom">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-subtitle">End-to-End Workflow</div>
+        <h2 class="section-title">How It Works</h2>
+        <p class="section-desc">
+          A seamless flow connecting EV drivers with station operators for frictionless electric mobility.
+        </p>
+      </div>
+
+      <div class="row g-4 justify-content-center">
+        <div class="col-md-4 col-lg-2">
+          <div class="workflow-step">
+            <div class="workflow-number">1</div>
+            <h5>Find Station</h5>
+            <p>Search stations by city, proximity, power rating & connector compatibility.</p>
+          </div>
+        </div>
+
+        <div class="col-md-4 col-lg-2">
+          <div class="workflow-step">
+            <div class="workflow-number">2</div>
+            <h5>Reserve Charger</h5>
+            <p>Select date, preferred start time, duration and confirm vehicle connector.</p>
+          </div>
+        </div>
+
+        <div class="col-md-4 col-lg-2">
+          <div class="workflow-step">
+            <div class="workflow-number">3</div>
+            <h5>Start Charging</h5>
+            <p>Plug in and initiate session with live energy and battery tracking.</p>
+          </div>
+        </div>
+
+        <div class="col-md-4 col-lg-2">
+          <div class="workflow-step">
+            <div class="workflow-number">4</div>
+            <h5>Complete Session</h5>
+            <p>Session wraps upon target battery level with automated tariff breakdown.</p>
+          </div>
+        </div>
+
+        <div class="col-md-4 col-lg-2">
+          <div class="workflow-step">
+            <div class="workflow-number">5</div>
+            <h5>Pay & Invoice</h5>
+            <p>Instant digital invoice generation with transparent kWh billing.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Unique Feature Section: Smart Charging Calculator -->
+  <section class="ev-section bg-light" id="calculatorSection">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-subtitle">Interactive Feature</div>
+        <h2 class="section-title">Smart Charging Calculator</h2>
+        <p class="section-desc">
+          Estimate your required energy, ideal charging duration, and expected charging cost before arriving at the station.
+        </p>
+      </div>
+
+      <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+        <div class="row g-0">
+          <div class="col-lg-6 p-4 p-md-5 bg-white">
+            <h4 class="fw-bold mb-4 text-dark"><i class="bi bi-sliders text-success me-2"></i>Configure Charging Parameters</h4>
+            
+            <form id="homeCalcForm">
+              <div class="mb-3">
+                <label class="form-label fw-semibold text-secondary" style="font-size:0.88rem;">Select Vehicle Preset (or custom)</label>
+                <select class="form-select" id="calcVehiclePreset">
+                  <optgroup label="Luxury & High-Performance EV Brands">
+                    <option value="taycan">Porsche Taycan 4S (93.4 kWh, 270 kW Max)</option>
+                    <option value="eqs">Mercedes-Benz EQS 580 (107.8 kWh, 200 kW Max)</option>
+                    <option value="ix">BMW iX xDrive50 (111.5 kWh, 195 kW Max)</option>
+                    <option value="etron">Audi e-tron GT (93.4 kWh, 270 kW Max)</option>
+                    <option value="tesla3">Tesla Model 3 Long Range (75.0 kWh, 250 kW Max)</option>
+                    <option value="xc40">Volvo XC40 Recharge (78.0 kWh, 150 kW Max)</option>
+                  </optgroup>
+                  <optgroup label="Mainstream EV Brands">
+                    <option value="nexon" selected>Tata Nexon EV (40.5 kWh, 60 kW Max)</option>
+                    <option value="mgzs">MG ZS EV (50.3 kWh, 80 kW Max)</option>
+                    <option value="ioniq5">Hyundai Ioniq 5 (72.6 kWh, 150 kW Max)</option>
+                    <option value="tiago">Tata Tiago EV (24.0 kWh, 25 kW Max)</option>
+                    <option value="byd">BYD Atto 3 (60.48 kWh, 80 kW Max)</option>
+                  </optgroup>
+                  <option value="custom">-- Custom EV Parameters --</option>
+                </select>
+              </div>
+
+              <div class="row g-3 mb-3">
+                <div class="col-md-6">
+                  <label class="form-label fw-semibold text-secondary" style="font-size:0.88rem;">Battery Capacity (kWh)</label>
+                  <div class="input-group">
+                    <input type="number" step="0.1" class="form-control" id="calcBatteryCap" value="40.5" min="5" max="150">
+                    <span class="input-group-text bg-light">kWh</span>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label fw-semibold text-secondary" style="font-size:0.88rem;">Charger Power (kW)</label>
+                  <select class="form-select" id="calcPower">
+                    <option value="7.4">7.4 kW (Slow AC)</option>
+                    <option value="22">22 kW (Fast AC)</option>
+                    <option value="30">30 kW (DC Fast)</option>
+                    <option value="60" selected>60 kW (DC Rapid)</option>
+                    <option value="120">120 kW (DC Ultra)</option>
+                    <option value="150">150 kW (DC Hyper)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <div class="d-flex justify-content-between">
+                  <label class="form-label fw-semibold text-secondary" style="font-size:0.88rem;">Current Battery Level</label>
+                  <span class="badge bg-secondary" id="calcCurrentDisplay">25%</span>
+                </div>
+                <input type="range" class="form-range" id="calcCurrentPct" min="5" max="95" value="25">
+              </div>
+
+              <div class="mb-3">
+                <div class="d-flex justify-content-between">
+                  <label class="form-label fw-semibold text-secondary" style="font-size:0.88rem;">Target Battery Level</label>
+                  <span class="badge bg-success" id="calcTargetDisplay">90%</span>
+                </div>
+                <input type="range" class="form-range" id="calcTargetPct" min="10" max="100" value="90">
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label fw-semibold text-secondary" style="font-size:0.88rem;">Electricity Price Tariff (₹ / kWh)</label>
+                <div class="input-group">
+                  <span class="input-group-text bg-light">₹</span>
+                  <input type="number" step="0.5" class="form-control" id="calcPrice" value="15.00" min="5" max="50">
+                  <span class="input-group-text bg-light">per kWh</span>
+                </div>
+                <small class="text-muted" style="font-size:0.75rem;">Sample station tariff rate for academic simulation.</small>
+              </div>
+            </form>
+          </div>
+
+          <div class="col-lg-6 p-4 p-md-5 bg-dark text-white d-flex flex-column justify-content-between" style="background: radial-gradient(circle at 100% 0%, #1e293b 0%, #0b1329 100%);">
+            <div>
+              <div class="d-flex justify-content-between align-items-center mb-4">
+                <span class="badge bg-success bg-opacity-25 text-success border border-success border-opacity-50 px-3 py-2 rounded-pill">
+                  <i class="bi bi-lightning-charge-fill me-1"></i> ESTIMATED RESULTS
+                </span>
+                <small class="text-secondary font-monospace">Stage 1 JS Engine</small>
+              </div>
+
+              <!-- Visual Battery Graphic Display -->
+              <div class="mb-4 p-3 rounded-3" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                  <span class="text-secondary" style="font-size: 0.85rem;">Battery Charge Progression</span>
+                  <span class="fw-bold font-monospace text-success" id="calcDeltaDisplay">+65% (+26.3 kWh)</span>
+                </div>
+                <div class="d-flex align-items-center gap-3">
+                  <div class="battery-frame dark">
+                    <div class="battery-fill" id="calcBatteryFill" style="width: 65%;">65%</div>
+                  </div>
+                  <div>
+                    <div class="fw-bold text-light" style="font-size: 0.9rem;" id="calcRangeSummary">25% ➔ 90%</div>
+                    <small class="text-secondary">Delta required energy</small>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Output Metrics Grid -->
+              <div class="row g-3">
+                <div class="col-sm-6">
+                  <div class="p-3 rounded-3" style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);">
+                    <div class="text-secondary" style="font-size:0.8rem; text-transform: uppercase;">Energy Required</div>
+                    <div class="fs-3 fw-bold text-white font-monospace mt-1" id="calcResEnergy">26.33 <span class="fs-6 fw-normal text-secondary">kWh</span></div>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="p-3 rounded-3" style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);">
+                    <div class="text-secondary" style="font-size:0.8rem; text-transform: uppercase;">Ideal Charging Time</div>
+                    <div class="fs-3 fw-bold text-info font-monospace mt-1" id="calcResTime">26 <span class="fs-6 fw-normal text-secondary">mins</span></div>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="p-3 rounded-3" style="background: rgba(0, 208, 132, 0.08); border: 1px solid rgba(0, 208, 132, 0.2);">
+                    <div class="d-flex justify-content-between align-items-center">
+                      <div>
+                        <div class="text-secondary" style="font-size:0.8rem; text-transform: uppercase;">Estimated Charging Cost</div>
+                        <div class="fs-2 fw-bold text-success font-monospace mt-1" id="calcResCost">₹394.95</div>
+                      </div>
+                      <a href="pages/reservations.html" class="btn btn-ev-primary btn-sm px-3">
+                        <i class="bi bi-calendar-check me-1"></i> Book Slot Now
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-4 pt-3 border-top border-secondary border-opacity-25">
+              <small class="text-secondary d-block" style="font-size: 0.78rem;">
+                <i class="bi bi-info-circle me-1"></i>
+                <strong>Note:</strong> Calculated values represent ideal/estimated metrics. Real charging speed depends on vehicle battery management systems (BMS), thermal throttling, and charging curves.
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Stations Preview -->
+  <section class="ev-section bg-white">
+    <div class="container">
+      <div class="d-flex justify-content-between align-items-end mb-4">
+        <div>
+          <div class="section-subtitle">Network Coverage</div>
+          <h2 class="section-title mb-0">Featured Charging Stations</h2>
+        </div>
+        <a href="pages/stations.html" class="btn btn-outline-dark rounded-pill px-3">
+          View All Stations <i class="bi bi-arrow-right"></i>
+        </a>
+      </div>
+
+      <div class="row g-4" id="homeFeaturedStations">
+        <!-- Rendered dynamically via JavaScript -->
+      </div>
+    </div>
+  </section>
+
+  <!-- User Roles Showcase Section -->
+  <section class="ev-section bg-light border-top">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-subtitle">Role-Based Access</div>
+        <h2 class="section-title">Designed for All Stakeholders</h2>
+        <p class="section-desc">
+          Strict role-based interfaces supporting enterprise administrators, local station managers, technicians, and retail EV owners.
+        </p>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-md-6 col-lg-3">
+          <div class="card h-100 border-0 shadow-sm rounded-4 p-4 text-center">
+            <div class="user-avatar mx-auto mb-3" style="width: 54px; height: 54px; font-size: 1.5rem; background: #0f172a;">
+              <i class="bi bi-shield-shaded text-success"></i>
+            </div>
+            <h5 class="fw-bold mb-1">Admin</h5>
+            <p class="text-muted small mb-3">Enterprise Oversight</p>
+            <ul class="list-unstyled text-start small text-secondary mb-4 flex-grow-1">
+              <li class="mb-1"><i class="bi bi-check2 text-success me-1"></i> Station & Charger CRUD</li>
+              <li class="mb-1"><i class="bi bi-check2 text-success me-1"></i> Global KPI Dashboard</li>
+              <li class="mb-1"><i class="bi bi-check2 text-success me-1"></i> Financial Reports & Tax</li>
+              <li class="mb-1"><i class="bi bi-check2 text-success me-1"></i> User Management</li>
+            </ul>
+            <button class="btn btn-outline-dark btn-sm rounded-pill w-100" onclick="switchUserRole('ADMIN')">Switch to Admin</button>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+          <div class="card h-100 border-0 shadow-sm rounded-4 p-4 text-center">
+            <div class="user-avatar mx-auto mb-3" style="width: 54px; height: 54px; font-size: 1.5rem; background: #0891b2;">
+              <i class="bi bi-building-gear text-white"></i>
+            </div>
+            <h5 class="fw-bold mb-1">Station Manager</h5>
+            <p class="text-muted small mb-3">Local Operations</p>
+            <ul class="list-unstyled text-start small text-secondary mb-4 flex-grow-1">
+              <li class="mb-1"><i class="bi bi-check2 text-info me-1"></i> Real-time Charger Grid</li>
+              <li class="mb-1"><i class="bi bi-check2 text-info me-1"></i> Session Monitoring</li>
+              <li class="mb-1"><i class="bi bi-check2 text-info me-1"></i> Station Revenue Tracking</li>
+              <li class="mb-1"><i class="bi bi-check2 text-info me-1"></i> Charger Utilization Score</li>
+            </ul>
+            <button class="btn btn-outline-dark btn-sm rounded-pill w-100" onclick="switchUserRole('STATION_MANAGER')">Switch to Manager</button>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+          <div class="card h-100 border-0 shadow-sm rounded-4 p-4 text-center">
+            <div class="user-avatar mx-auto mb-3" style="width: 54px; height: 54px; font-size: 1.5rem; background: #f59e0b;">
+              <i class="bi bi-tools text-dark"></i>
+            </div>
+            <h5 class="fw-bold mb-1">Technician</h5>
+            <p class="text-muted small mb-3">Maintenance & Repairs</p>
+            <ul class="list-unstyled text-start small text-secondary mb-4 flex-grow-1">
+              <li class="mb-1"><i class="bi bi-check2 text-warning me-1"></i> Fault Inspection Tickets</li>
+              <li class="mb-1"><i class="bi bi-check2 text-warning me-1"></i> Hardware Status Updates</li>
+              <li class="mb-1"><i class="bi bi-check2 text-warning me-1"></i> Auto-lock Faulty Chargers</li>
+              <li class="mb-1"><i class="bi bi-check2 text-warning me-1"></i> Maintenance History</li>
+            </ul>
+            <button class="btn btn-outline-dark btn-sm rounded-pill w-100" onclick="switchUserRole('TECHNICIAN')">Switch to Technician</button>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+          <div class="card h-100 border-0 shadow-sm rounded-4 p-4 text-center">
+            <div class="user-avatar mx-auto mb-3" style="width: 54px; height: 54px; font-size: 1.5rem; background: #10b981;">
+              <i class="bi bi-person-fill text-white"></i>
+            </div>
+            <h5 class="fw-bold mb-1">Customer</h5>
+            <p class="text-muted small mb-3">EV Vehicle Driver</p>
+            <ul class="list-unstyled text-start small text-secondary mb-4 flex-grow-1">
+              <li class="mb-1"><i class="bi bi-check2 text-success me-1"></i> Find Stations & Filter</li>
+              <li class="mb-1"><i class="bi bi-check2 text-success me-1"></i> Reserve Charging Slots</li>
+              <li class="mb-1"><i class="bi bi-check2 text-success me-1"></i> Live Charging Simulator</li>
+              <li class="mb-1"><i class="bi bi-check2 text-success me-1"></i> Digital Invoices & Cost</li>
+            </ul>
+            <button class="btn btn-outline-dark btn-sm rounded-pill w-100" onclick="switchUserRole('CUSTOMER')">Switch to Customer</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="ev-footer">
+    <div class="container">
+      <div class="row g-4 mb-4">
+        <div class="col-lg-4">
+          <div class="d-flex align-items-center gap-2 mb-3">
+            <span class="ev-brand-icon"><i class="bi bi-lightning-charge-fill"></i></span>
+            <span class="text-white fw-bold fs-5">VoltFlow Management</span>
+          </div>
+          <p class="text-secondary small">
+            Academic individual project for Web Technology course demonstrating a comprehensive EV charging infrastructure management platform.
+          </p>
+          <div class="footer-academic-badge mt-3">
+            <span class="badge bg-secondary mb-1">LWP Review 01 — Stage 1</span>
+            <div class="text-light small fw-bold">Client-side Architecture & Simulation</div>
+            <small class="text-muted">HTML5 • CSS3 • Bootstrap 5 • JavaScript</small>
+          </div>
+        </div>
+
+        <div class="col-6 col-lg-2">
+          <h5>Navigation</h5>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="pages/dashboard.html">Admin Dashboard</a></li>
+            <li><a href="pages/stations.html">Stations</a></li>
+            <li><a href="pages/chargers.html">Chargers</a></li>
+            <li><a href="pages/find-charger.html">Find a Charger</a></li>
+          </ul>
+        </div>
+
+        <div class="col-6 col-lg-2">
+          <h5>Operations</h5>
+          <ul class="footer-links">
+            <li><a href="pages/reservations.html">Reservations</a></li>
+            <li><a href="pages/charging-session.html">Charging Sessions</a></li>
+            <li><a href="pages/maintenance.html">Maintenance</a></li>
+            <li><a href="pages/vehicles.html">EV Vehicles</a></li>
+            <li><a href="pages/reports.html">Reports & Analytics</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-4">
+          <h5>Core System Objective</h5>
+          <blockquote class="blockquote small text-secondary border-start border-success ps-3">
+            "Which charger is available, when can the customer use it, how much energy will be consumed, how long will charging take, and what will the estimated cost be?"
+          </blockquote>
+          <div class="mt-3">
+            <span class="badge bg-dark border border-secondary text-secondary me-2">Stage 1: Complete UI</span>
+            <span class="badge bg-dark border border-secondary text-secondary">Stage 2: MySQL Ready</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="border-top border-secondary border-opacity-25 pt-3 d-flex flex-wrap justify-content-between align-items-center text-secondary small">
+        <div>
+          © 2026 EV Charging Station Management System. Individual Web Technology Project.
+        </div>
+        <div class="d-flex gap-3">
+          <span>Responsive Design</span>
+          <span>•</span>
+          <span>Role-Based Access</span>
+          <span>•</span>
+          <span>Client-Side Scripting</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Core App State JS -->
+  <script src="js/app.js"></script>
+  
+  <!-- Inline Page Script for Home -->
+  <script>
+    function switchUserRole(role) {
+      evApp.setCurrentUser(role);
+      showToast('Role Switched', `Active user simulated as: ${role}`, 'success');
+      setTimeout(() => window.location.reload(), 400);
+    }
+
+    // Featured Stations Dynamic Render
+    document.addEventListener('DOMContentLoaded', () => {
+      const container = document.getElementById('homeFeaturedStations');
+      const stations = evApp.getStations().slice(0, 3);
+      const chargers = evApp.getChargers();
+
+      let html = '';
+      stations.forEach(stn => {
+        const stationChargers = chargers.filter(c => c.stationId === stn.id);
+        const availCount = stationChargers.filter(c => c.status === 'Available').length;
+        const total = stationChargers.length;
+
+        html += `
+          <div class="col-md-6 col-lg-4">
+            <div class="card h-100 shadow-sm border-0 rounded-4 overflow-hidden">
+              <div class="card-body p-4 d-flex flex-column">
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                  <span class="badge bg-light text-dark border font-monospace">${stn.id}</span>
+                  <span class="badge-status ${stn.status.toLowerCase().includes('oper') ? 'available' : 'charging'}">
+                    ${stn.status}
+                  </span>
+                </div>
+                <h5 class="fw-bold mb-1">${stn.name}</h5>
+                <p class="text-muted small mb-3"><i class="bi bi-geo-alt-fill text-danger me-1"></i>${stn.address}, ${stn.city}</p>
+                
+                <div class="p-3 bg-light rounded-3 mb-3 mt-auto">
+                  <div class="d-flex justify-content-between align-items-center mb-1">
+                    <span class="small text-secondary fw-semibold">Charger Availability</span>
+                    <span class="fw-bold ${availCount > 0 ? 'text-success' : 'text-danger'}">${availCount} / ${total} Available</span>
+                  </div>
+                  <div class="progress" style="height: 6px;">
+                    <div class="progress-bar bg-success" style="width: ${total > 0 ? (availCount/total)*100 : 0}%;"></div>
+                  </div>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center border-top pt-3">
+                  <span class="small text-secondary"><i class="bi bi-currency-rupee"></i><strong>${stn.pricingRate.toFixed(2)}</strong> / kWh</span>
+                  <a href="pages/station-details.html?id=${stn.id}" class="btn btn-sm btn-outline-primary rounded-pill px-3">
+                    View Chargers <i class="bi bi-arrow-right"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      });
+      if (container) container.innerHTML = html;
+
+      // Smart Calculator Interactions
+      const presetSelect = document.getElementById('calcVehiclePreset');
+      const batteryCapInput = document.getElementById('calcBatteryCap');
+      const powerSelect = document.getElementById('calcPower');
+      const currentSlider = document.getElementById('calcCurrentPct');
+      const targetSlider = document.getElementById('calcTargetPct');
+      const priceInput = document.getElementById('calcPrice');
+
+      const currentDisplay = document.getElementById('calcCurrentDisplay');
+      const targetDisplay = document.getElementById('calcTargetDisplay');
+      const deltaDisplay = document.getElementById('calcDeltaDisplay');
+      const batteryFill = document.getElementById('calcBatteryFill');
+      const rangeSummary = document.getElementById('calcRangeSummary');
+      const resEnergy = document.getElementById('calcResEnergy');
+      const resTime = document.getElementById('calcResTime');
+      const resCost = document.getElementById('calcResCost');
+
+      const presets = {
+        taycan: { cap: 93.4, power: 150 },
+        eqs: { cap: 107.8, power: 150 },
+        ix: { cap: 111.5, power: 150 },
+        etron: { cap: 93.4, power: 150 },
+        tesla3: { cap: 75.0, power: 150 },
+        xc40: { cap: 78.0, power: 120 },
+        nexon: { cap: 40.5, power: 60 },
+        mgzs: { cap: 50.3, power: 60 },
+        ioniq5: { cap: 72.6, power: 150 },
+        tiago: { cap: 24.0, power: 22 },
+        byd: { cap: 60.48, power: 60 }
+      };
+
+      if (presetSelect) {
+        presetSelect.addEventListener('change', (e) => {
+          const val = e.target.value;
+          if (presets[val]) {
+            batteryCapInput.value = presets[val].cap;
+            powerSelect.value = presets[val].power;
+            recalculate();
+          }
+        });
+      }
+
+      function recalculate() {
+        let cur = parseInt(currentSlider.value);
+        let tgt = parseInt(targetSlider.value);
+        if (cur >= tgt) {
+          tgt = Math.min(100, cur + 1);
+          targetSlider.value = tgt;
+        }
+
+        currentDisplay.textContent = cur + '%';
+        targetDisplay.textContent = tgt + '%';
+
+        const cap = parseFloat(batteryCapInput.value) || 40;
+        const pwr = parseFloat(powerSelect.value) || 60;
+        const prc = parseFloat(priceInput.value) || 15;
+
+        const metrics = evApp.calculateChargingMetrics(cap, cur, tgt, pwr, prc);
+
+        const delta = tgt - cur;
+        deltaDisplay.textContent = `+${delta}% (+${metrics.energyRequired} kWh)`;
+        rangeSummary.textContent = `${cur}% ➔ ${tgt}%`;
+
+        batteryFill.style.width = tgt + '%';
+        batteryFill.textContent = tgt + '%';
+
+        resEnergy.innerHTML = `${metrics.energyRequired} <span class="fs-6 fw-normal text-secondary">kWh</span>`;
+        resTime.innerHTML = `${metrics.durationFormatted}`;
+        resCost.textContent = `₹${metrics.estimatedCost.toFixed(2)}`;
+      }
+
+      [batteryCapInput, powerSelect, currentSlider, targetSlider, priceInput].forEach(el => {
+        if (el) el.addEventListener('input', recalculate);
+      });
+
+      // Initial calc run
+      recalculate();
+    });
+  </script>
+</body>
+</html>

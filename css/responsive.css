@@ -1,0 +1,97 @@
+/* ==========================================================================
+   EV Charging Station Management System - Responsive Styles
+   ========================================================================== */
+
+@media (max-width: 991.98px) {
+  .app-sidebar {
+    position: fixed;
+    left: -280px;
+    width: 270px;
+    top: 0;
+    bottom: 0;
+    box-shadow: 10px 0 25px rgba(0, 0, 0, 0.3);
+  }
+
+  .app-sidebar.show {
+    left: 0;
+  }
+
+  .sidebar-backdrop {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(11, 19, 41, 0.6);
+    backdrop-filter: blur(4px);
+    z-index: 1025;
+  }
+
+  .sidebar-backdrop.show {
+    display: block;
+  }
+
+  .hero-title {
+    font-size: 2.4rem;
+  }
+
+  .stat-value {
+    font-size: 2rem;
+  }
+
+  .stat-item {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+}
+
+@media (max-width: 767.98px) {
+  .hero-title {
+    font-size: 2rem;
+  }
+
+  .hero-lead {
+    font-size: 1rem;
+  }
+
+  .section-title {
+    font-size: 1.75rem;
+  }
+
+  .app-content {
+    padding: 1rem;
+  }
+
+  .app-header {
+    padding: 0 1rem;
+  }
+
+  .kpi-value {
+    font-size: 1.75rem;
+  }
+
+  .battery-frame {
+    width: 95px;
+    height: 44px;
+  }
+
+  .table-responsive {
+    border-radius: var(--radius-md);
+  }
+}
+
+@media (max-width: 575.98px) {
+  .hero-title {
+    font-size: 1.75rem;
+  }
+
+  .ev-brand-icon {
+    width: 34px;
+    height: 34px;
+    font-size: 1.1rem;
+  }
+
+  .ev-navbar .navbar-brand {
+    font-size: 1.15rem;
+  }
+}
